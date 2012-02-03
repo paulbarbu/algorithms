@@ -10,7 +10,7 @@ int main(){
 
     scanf("%d", &n);
 
-    int *sieve = malloc(sizeof(int) * n);
+    int *sieve = malloc(sizeof(int) * n+1);
 
     for(int i=2; i<=n; i++){
         for(int j=i+i; j<=n; j=j+i){
