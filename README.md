@@ -3,6 +3,13 @@ Algorithms
 
 A list of algorithms and their implementation written in various programming languages
 
+Disclaimer
+==========
+These implementations of various algorithms are just proof of concepts, maybe
+they are not functional without a proper input.
+The code may not respect some standards and many of the variables are named in
+romanian.
+
 License
 =======
 
