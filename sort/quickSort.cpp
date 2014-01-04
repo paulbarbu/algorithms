@@ -1,47 +1,47 @@
+#include <vector>
 #include <iostream>
 
-using namespace std;
+template <typename T>
+std::vector<T> qs(std::vector<T> v){
+    std::vector<T> smaller, greater;
+    T pivot;
 
-int a[100], n;
-
-int cautp(int s, int d){
-    int i=s, j=d, x=a[s];
-
-    while(i<j){
-        while(a[j]>x && i<j){
-            j--;
-        }
-        a[i] = a[j];
-
-        while(a[i]<x && i<j){
-            i++;
-        }
-        a[j]=a[i];
+    if(!v.size()){
+        return smaller;
     }
-    a[i] = x;
-    return i;
+
+    pivot = v.back();
+    v.pop_back();
+
+    for(T val : v){
+        if(val <= pivot){
+            smaller.push_back(val);
+        }
+        else{
+            greater.push_back(val);
+        }
+    }
+
+    smaller = qs(smaller);
+    greater = qs(greater);
+
+    smaller.push_back(pivot);
+    smaller.insert(smaller.end(), greater.begin(), greater.end());
+
+    return smaller;
 }
 
-void quicksort(int s, int d){
-    int p = cautp(s, d);
+int main(){
+    std::vector<int> foo;
+    foo.push_back(2);
+    foo.push_back(4);
+    foo.push_back(1);
+    foo.push_back(7);
+    foo = qs(foo);
 
-    if(s<p-1){
-        quicksort(s, p-1);
+    for(auto val : foo){
+        std::cout<<val<<" ";
     }
 
-    if(d>p+1){
-        quicksort(p+1, d);
-    }
-}
-
-int main()
-{
-    a = {2, 1, 7, 3, 5, 6};
-    n=6;
-    quicksort(0, n-1);
-
-    for(int i=0;i<n;i++){
-        cout<<a[i]<<' ';
-    }
-    return 0;
+    std::cout<<"\n";
 }
