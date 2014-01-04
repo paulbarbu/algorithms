@@ -1,3 +1,4 @@
+// g++ --std=c++11 -Wall quickSort.cpp
 #include <vector>
 #include <iostream>
 
