@@ -1,54 +1,43 @@
+// g++ --std=c++11 -Wall quickSort.cpp
 #include <iostream>
+#include <algorithm>
+#include <vector>
 
-using namespace std;
-
-int a[100], n;
-
-void interclasare(int s, int d, int mjl){
-    int i = s, j = mjl+1, k = 0, c[100];
-
-    while(i<=mjl && j<=d){
-        if(a[i]<=a[j]){
-            c[k++] = a[i++];
-        }
-        else{
-            c[k++] = a[j++];
-        }
+template<class T>
+std::vector<T> mergeSort(typename std::vector<T>::iterator start, typename std::vector<T>::iterator end){
+    if(start == end){
+        return std::vector<T>();
     }
 
-    while(i<=mjl){
-        c[k++] = a[i++];
+    if(1 == std::distance(start, end)){
+        return std::vector<T>(1, *start);
     }
 
-    while(j<=d){
-        c[k++] = a[j++];
-    }
+    auto mid = start;
+    std::advance(mid, std::distance(start, end)/2);
 
-    k=0;
-    for(i=s;i<=d;i++){
-        a[i] = c[k++];
-    }
-}
+    auto left = mergeSort<T>(start, mid);
+    auto right = mergeSort<T>(mid, end);
 
-void mergesort(int s, int d){
-    if(s<=d){
-        int mjl = (s+d)/2;
-        mergesort(s, mjl);
-        mergesort(mjl+1, d);
+    std::vector<T> result(left.size() + right.size(), 0);
 
-        interclasare(s, d, mjl);
-    }
+    merge(left.begin(), left.end(), right.begin(), right.end(), result.begin());
+
+    return result;
 }
 
 int main()
 {
-    a = {2, 1, 7, 3, 5, 6};
-    n = 6;
+    std::vector<int> a;
+    a.push_back(3);
+    a.push_back(-1);
+    a.push_back(1);
+    a.push_back(5);
 
-    mergesort(0, n-1);
+    auto r = mergeSort<int>(a.begin(), a.end());
 
-    for(int i=0;i<n;i++){
-        cout<<a[i]<<' ';
+    for(auto i=r.begin(); i != r.end(); i++){
+        std::cout<<*i<<" ";
     }
 
     return 0;
